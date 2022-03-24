@@ -1,17 +1,10 @@
 <template>
-  <div class="wrapper">
+  <main>
+    <Header />
     <Nav />
-    
-    <div class="main">
-      <Header />
-
-      <main class="content">
-        <router-view/>
-      </main>
-
-      <Footer />
-    </div>
-  </div>
+    <router-view />
+    <Footer />
+  </main>
 </template>
 
 <script>
