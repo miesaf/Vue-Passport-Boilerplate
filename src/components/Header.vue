@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="md" type="dark" variant="info">
-    <b-navbar-brand href="#">NavBar</b-navbar-brand>
+    <b-navbar-brand href="#">{{ appName }}</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -23,7 +23,13 @@
 
 <script>
 export default {
-  name: "TopHeader"
+  name: "TopHeader",
+
+  data() {
+    return {
+      appName: process.env.VUE_APP_NAME
+    }
+  }
 }
 </script>
 
