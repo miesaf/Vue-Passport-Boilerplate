@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import IdleVue from 'idle-vue'
+import VueSession from 'vue-session'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
@@ -21,6 +22,8 @@ const SITOoptions = {
 }
 
 Vue.use(IdleVue, SITOoptions)
+Vue.use(VueSession)
+
 Vue.config.productionTip = false
 
 new Vue({
