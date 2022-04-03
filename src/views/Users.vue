@@ -236,11 +236,13 @@ export default {
       }
     }
   },
+
   computed: {
     isCustomer: function () {
       return this.input.roles.value.find(element => element.text == 'Customer')
     }
   },
+
   created() {
     var flashMessage = this.$session.flash.get("flash-message")
     if(flashMessage) {
@@ -261,6 +263,7 @@ export default {
 
     this.getUserList()
   },
+  
   methods: {
     getUserList() {
       this.tableLoading = true

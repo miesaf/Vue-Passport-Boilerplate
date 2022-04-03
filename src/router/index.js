@@ -72,6 +72,14 @@ const routes = [
         component: () => import('@/views/Users.vue'),
       },
 
+      // Audit Log
+      {
+        path: 'auditLogs',
+        name: 'auditLogs',
+        meta: { middleware: [ auth ], permissions: ['auditLogs.*', 'auditLogs.list'] },
+        component: () => import('@/views/AuditLogs.vue'),
+      },
+
       // Logout
       {
         path: 'logout',
