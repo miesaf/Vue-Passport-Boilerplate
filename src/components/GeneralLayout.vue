@@ -8,7 +8,7 @@
 
 <script>
 import Nav from '@/components/Nav'
-import Header from '@/components/HeaderWithNav'
+import Header from '@/components/Header'
 
 export default {
   name: "AppLayout",
