@@ -11,6 +11,7 @@ const getters = {
   authEmail: state => state.user.authEmail,
   authRoles: state => state.user.authRoles,
   authPermissions: state => state.user.authPermissions,
+  authLastLogin: state => state.user.authLastLogin,
   options: state => state.system.options,
 }
 

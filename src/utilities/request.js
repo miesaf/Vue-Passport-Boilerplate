@@ -43,7 +43,7 @@ service.interceptors.request.use(
         if (moment(now).isAfter(moment(ttl).format("YYYY-MM-DD HH:mm:ss"))) {
           try {
             await store
-              .dispatch("RefreshTokenDua")
+              .dispatch("RefreshToken")
               .then(() => {
                 // Token successfuly refreshed
                 process.env.NODE_ENV === 'production' ? console.info("Token successfully refreshed") : console.log("[DEBUG] Token successfully refreshed by request interceptors")

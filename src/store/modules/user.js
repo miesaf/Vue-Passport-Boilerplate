@@ -22,7 +22,8 @@ const user = {
     authName: '',
     authEmail: '',
     authRoles: '',
-    authPermissions: ''
+    authPermissions: '',
+    authLastLogin: ''
   },
 
   mutations: {
@@ -37,7 +38,8 @@ const user = {
     SET_AUTHNAME: (state, authName) => { state.authName = authName },
     SET_AUTHEMAIL: (state, authEmail) => { state.authEmail = authEmail },
     SET_AUTHROLES: (state, authRoles) => { state.authRoles = authRoles },
-    SET_AUTHPERMISSIONS: (state, authPermissions) => { state.authPermissions = authPermissions }
+    SET_AUTHPERMISSIONS: (state, authPermissions) => { state.authPermissions = authPermissions },
+    SET_AUTHLASTLOGIN: (state, authLastLogin) => { state.authLastLogin = authLastLogin }
   },
 
   actions: {
@@ -149,43 +151,6 @@ const user = {
     },
 
     RefreshToken ({ commit }) {
-      axios({
-        method: 'post',
-        url: process.env.VUE_APP_BE + 'refreshToken',
-        data: {
-          refresh_token: getRefreshToken()
-        }
-      })
-      .then(resp => {
-        const data = resp.data
-          if(data.status) {
-            const now = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-            var ttl = data.token.expires_in ? data.token.expires_in : 0;
-            var token_expire = moment(now).add(ttl, "seconds")
-
-            var refreshTtl = data.token.refresh_expires_in ? data.token.refresh_expires_in : 0;
-            var refresh_expire = moment(now).add(refreshTtl, "seconds")
-
-            process.env.NODE_ENV === 'production' ? null : console.log("[DEBUG] New token: " + data.token.access_token)
-            setToken(data.token.access_token)
-            commit('SET_TOKEN', data.token.access_token)
-
-            setAuthExpiresOn(token_expire.format("YYYY-MM-DD HH:mm:ss"))
-            commit('SET_AUTHEXPIRESON', token_expire.format("YYYY-MM-DD HH:mm:ss"))
-
-            setRefreshToken(data.token.refresh_token)
-            commit('SET_REFRESH_TOKEN', data.token.refresh_token)
-
-            setRefreshExpiresOn(refresh_expire.format("YYYY-MM-DD HH:mm:ss"))
-            commit('SET_REFRESHEXPIRESON', refresh_expire.format("YYYY-MM-DD HH:mm:ss"))
-          }
-      })
-      .catch(error => {
-        console.error(error)
-      })
-    },
-
-    RefreshTokenDua ({ commit }) {
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
@@ -255,6 +220,8 @@ const user = {
 
       await commit('SET_AUTHPERMISSIONS', null)
 
+      await commit('SET_AUTHLASTLOGIN', null)
+
       await commit('SET_OPTIONS', null)
 
       await removeToken()
@@ -291,6 +258,8 @@ const user = {
               permissions.push(element.name)
             })
             commit('SET_AUTHPERMISSIONS', permissions.toString().split(','))
+
+            commit('SET_AUTHLASTLOGIN', moment(data.last_signin).format('YYYY-MM-DD HH:mm:ss'))
 
             resolve()
           })

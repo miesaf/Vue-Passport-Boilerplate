@@ -36,3 +36,45 @@ export function logout () {
     method: 'post'
   })
 }
+
+export function firstTimeLogin (pwdObj) {
+  return request({
+    url: '/password/firstTime',
+    method: 'post',
+    data: {
+      user_id: pwdObj.user_id,
+      new_password: pwdObj.new_password
+    }
+  })
+}
+
+export function requestReset (user_id) {
+  return request({
+    url: '/password/email',
+    method: 'post',
+    data: {
+      user_id: user_id
+    }
+  })
+}
+
+export function checkReset (token) {
+  return request({
+    url: '/checkReset',
+    method: 'post',
+    data: {
+      token: token,
+    }
+  })
+}
+
+export function reset (reqObj) {
+  return request({
+    url: '/password/reset',
+    method: 'post',
+    data: {
+      token: reqObj.token,
+      new_password: reqObj.new_password
+    }
+  })
+}

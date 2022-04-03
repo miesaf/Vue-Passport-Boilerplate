@@ -18,6 +18,24 @@ const routes = [
         meta: { middleware: [ guest ] },
         component: () => import('@/views/auths/Login.vue')
       },
+      {
+        path: '/password/firstTime',
+        name: 'password.firstTime',
+        meta: { middleware: [ guest ] },
+        component: () => import('@/views/auths/FirstTimeLogin.vue'),
+      },
+      {
+        path: '/password/forgot',
+        name: 'password.forgot',
+        meta: { middleware: [ guest ] },
+        component: () => import('@/views/auths/ForgotPassword.vue'),
+      },
+      {
+        path: '/password/reset/:token',
+        name: 'password.reset',
+        meta: { middleware: [ guest ] },
+        component: () => import('@/views/auths/ResetPassword.vue'),
+      },
     ]
   },
   {

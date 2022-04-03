@@ -46,10 +46,6 @@ export default {
 
   data() {
     return {
-      flash: {
-        message: '',
-        class: ''
-      },
       input: {
         user_id: {
           value: '',
@@ -64,16 +60,13 @@ export default {
   },
 
   created() {
-    if(this.$session.flash.get("flash-class")) {
+    if(this.$session.flash.get("flash-message")) {
       this.$bvToast.toast(this.$session.flash.get("flash-message"), { autoHideDelay: 5000, variant: this.$session.flash.get("flash-class"), solid: true })
     }
   },
 
   methods: {
     onSubmit() {
-      this.flash.class = null
-      this.flash.message = null
-
       // Form Validation
       var doSubmit = true
       this.input.user_id.errMsg = null
@@ -125,9 +118,6 @@ export default {
                   })
                   .catch(() => {
                     this.$bvToast.toast(res.data.message, { autoHideDelay: 5000, variant: "danger", solid: true })
-
-                    this.flash.class = "danger"
-                    this.flash.message = "Login failed"
                   });
               } else {
                 this.$store
@@ -142,17 +132,11 @@ export default {
                 if(this.$store.getters.authAttempt) {
                   this.$bvToast.toast("You have " + (this.$store.getters.authMaxAttempt - parseInt(this.$store.getters.authAttempt)) + " attempt(s) more before being locked.", { autoHideDelay: 5000, variant: "warning", solid: true })
                 }
-
-                this.flash.class = "danger"
-                this.flash.message = res.data.message
               }
             })
             .catch((e) => {
               console.error(e)
               this.$bvToast.toast("Login failed due to network error", { autoHideDelay: 5000, variant: "danger", solid: true })
-
-              this.flash.class = "danger"
-              this.flash.message = "Login failed due to network error."
             });
         } catch (e) {
           console.error(e)
