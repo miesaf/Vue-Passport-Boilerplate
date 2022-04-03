@@ -78,3 +78,14 @@ export function reset (reqObj) {
     }
   })
 }
+
+export function changePassword (reqObj) {
+  return request({
+    url: '/user/changePassword',
+    method: 'post',
+    data: {
+      old_password: reqObj.oldPassword,
+      new_password: reqObj.newPassword
+    }
+  })
+}

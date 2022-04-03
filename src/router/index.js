@@ -58,6 +58,14 @@ const routes = [
         component: () => import('@/views/profile/UserProfile.vue')
       },
       {
+        path: 'profile/changePassword',
+        name: 'profile.changePword',
+        meta: { middleware: [ auth ] },
+        component: () => import('@/views/profile/ChangePassword.vue')
+      },
+
+      // Logout
+      {
         path: 'logout',
         name: 'logout',
         // meta: { middleware: [ auth ] },
