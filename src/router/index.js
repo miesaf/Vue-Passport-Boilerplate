@@ -64,6 +64,14 @@ const routes = [
         component: () => import('@/views/profile/ChangePassword.vue')
       },
 
+      // User Management
+      {
+        path: 'users',
+        name: 'users',
+        meta: { middleware: [ auth ], permissions: ['users.*', 'users.list', 'users.add', 'users.view', 'users.update', 'users.delete'] },
+        component: () => import('@/views/Users.vue'),
+      },
+
       // Logout
       {
         path: 'logout',
