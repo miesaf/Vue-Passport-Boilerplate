@@ -67,7 +67,7 @@ service.interceptors.request.use(
 
       if(logoutFlag) {
         await store.dispatch("Logout")
-        await store.dispatch("ServiceNotify", { message: "Session expired. Please re-login.", class: "error" })
+        await store.dispatch("ServiceNotify", { message: "Session expired. Please re-login.", class: "danger" })
         await new Promise(r => setTimeout(r, 2000))
         await window.location.replace(process.env.VUE_APP_URL)
       }
@@ -86,21 +86,21 @@ service.interceptors.response.use(async function (response) {
   switch(response.status) {
     case 401:
       await store.dispatch("Logout")
-      await store.dispatch("ServiceNotify", { message: "Session expired. Please re-login.", class: "error" })
+      await store.dispatch("ServiceNotify", { message: "Session expired. Please re-login.", class: "danger" })
       await new Promise(r => setTimeout(r, 2000))
       await window.location.replace(process.env.VUE_APP_URL)
       break
     case 403:
-      await store.dispatch("ServiceNotify", { message: "Insufficient permission. Request rejected.", class: "error" })
+      await store.dispatch("ServiceNotify", { message: "Insufficient permission. Request rejected.", class: "danger" })
       break
     case 429:
-      await store.dispatch("ServiceNotify", { message: response.data.message, class: "error" })
+      await store.dispatch("ServiceNotify", { message: response.data.message, class: "danger" })
       break
     case 500:
-      await store.dispatch("ServiceNotify", { message: "Back end service error.", class: "error" })
+      await store.dispatch("ServiceNotify", { message: "Back end service error.", class: "danger" })
       break
     case 503:
-      await store.dispatch("ServiceNotify", { message: "Back end service unavailable. Please try again later. If problem persist report to system administrator.", class: "error" })
+      await store.dispatch("ServiceNotify", { message: "Back end service unavailable. Please try again later. If problem persist report to system administrator.", class: "danger" })
       break
     default:
       // do nothing
