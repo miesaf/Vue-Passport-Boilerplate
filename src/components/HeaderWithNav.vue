@@ -19,6 +19,9 @@
           <router-link :to="{ name: 'users' }" custom v-slot="{ navigate }" v-if="permited(['users.*', 'users.list', 'users.add', 'users.view', 'users.update', 'users.delete'])">
             <b-dropdown-item @click="navigate"><b-icon icon="people" /> User Management</b-dropdown-item>
           </router-link>
+          <router-link :to="{ name: 'auditLogs' }" custom v-slot="{ navigate }" v-if="permited(['auditLogs.*', 'auditLogs.list', 'auditLogs.view'])">
+            <b-dropdown-item @click="navigate"><b-icon icon="clock-history" /> Audit Logs</b-dropdown-item>
+          </router-link>
         </b-nav-item-dropdown>
 
         </b-nav-item-dropdown>

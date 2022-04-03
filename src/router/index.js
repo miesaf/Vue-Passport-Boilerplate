@@ -76,7 +76,7 @@ const routes = [
       {
         path: 'auditLogs',
         name: 'auditLogs',
-        meta: { middleware: [ auth ], permissions: ['auditLogs.*', 'auditLogs.list'] },
+        meta: { middleware: [ auth ], permissions: ['auditLogs.*', 'auditLogs.list', 'auditLogs.view'] },
         component: () => import('@/views/AuditLogs.vue'),
       },
 
