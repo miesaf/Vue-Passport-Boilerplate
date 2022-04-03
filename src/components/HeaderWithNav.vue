@@ -12,6 +12,11 @@
           <template #button-content>
             <em>{{ user_id }}</em>
           </template>
+          <b-dropdown-item><b>{{ userName }}</b></b-dropdown-item>
+          <b-dropdown-divider />
+          <router-link :to="{ name: 'profile.detail' }" custom v-slot="{ navigate }">
+            <b-dropdown-item @click="navigate">Profile</b-dropdown-item>
+          </router-link>
           <router-link :to="{ name: 'logout' }" custom v-slot="{ navigate }">
             <b-dropdown-item @click="navigate">Logout</b-dropdown-item>
           </router-link>
@@ -28,7 +33,8 @@ export default {
   data() {
     return {
       appName: process.env.VUE_APP_NAME,
-      user_id: this.$store.state.user.authUserId
+      user_id: this.$store.state.user.authUserId,
+      userName: this.$store.state.user.authName
     }
   }
 }

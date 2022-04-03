@@ -49,6 +49,14 @@ const routes = [
         meta: { middleware: [ auth ] },
         component: () => import('@/views/Dashboard.vue')
       },
+
+      // Profile Management
+      {
+        path: 'profile',
+        name: 'profile.detail',
+        meta: { middleware: [ auth ] },
+        component: () => import('@/views/profile/UserProfile.vue')
+      },
       {
         path: 'logout',
         name: 'logout',
