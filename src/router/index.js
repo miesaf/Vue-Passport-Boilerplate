@@ -1,38 +1,84 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import store from '@/store/index'
+import guest from './middleware/guest'
+import auth from './middleware/auth'
+import middlewarePipeline from './middlewarePipeline'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    component: () => import('@/components/AppLayout.vue'),
+    component: () => import('@/components/GeneralLayout.vue'),
     children: [
       {
         path: '/',
-        name: 'dashbaord',
-        component: () => import('@/views/Dashboard.vue')
-      }
+        name: 'login',
+        meta: { middleware: [ guest ] },
+        component: () => import('@/views/auths/Login.vue')
+      },
     ]
   },
   {
-    path: '/home',
-    name: 'home',
-    component: HomeView
+    path: '/',
+    component: () => import('@/components/AppLayout.vue'),
+    children: [
+      // Dashboard
+      {
+        path: 'dashboard',
+        name: 'dashboard',
+        meta: { middleware: [ auth ] },
+        component: () => import('@/views/Dashboard.vue')
+      },
+      {
+        path: 'logout',
+        name: 'logout',
+        // meta: { middleware: [ auth ] },
+        component: () => import('@/views/auths/Logout.vue')
+      }
+    ]
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+
+  // Error Pages
+  { path: '/403', name: 'error.403', component: () => import('@/components/Err403Page.vue') },
+  { path: '/500', name: 'error.500', component: () => import('@/components/Err500Page.vue') },
+
+  // If route not found (404)
+  { path: '*', component: () => import('@/components/Err404Page.vue') },
 ]
 
 const router = new VueRouter({
-  routes
+  base: process.env.VUE_APP_BASE_URL,
+  routes,
+  scrollBehavior() {
+    return {x: 0, y: 0};
+  }
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (!(to.meta.middleware || to.meta.permissions)) {
+    process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] No middleware and permission meta tag defined')
+    return await next()
+  } else {
+    process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] Middleware or permission meta tag exists')
+  }
+
+  const middleware = to.meta.middleware
+  const permissions = to.meta.permissions
+
+  const context = {
+    to,
+    from,
+    next,
+    store,
+    permissions
+  }
+
+  return await middleware[0]({
+    ...context,
+    next: middlewarePipeline(context, middleware, 1)
+  })
 })
 
 export default router
