@@ -1,6 +1,8 @@
 <template>
   <b-navbar toggleable="md" type="dark" variant="success">
-    <b-navbar-brand href="#">{{ appName }}</b-navbar-brand>
+    <router-link :to="{ name: 'dashboard' }" custom v-slot="{ navigate }">
+      <b-navbar-brand @click="navigate">{{ appName }}</b-navbar-brand>
+    </router-link>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -16,6 +18,9 @@
           <b-dropdown-divider />
           <router-link :to="{ name: 'profile.detail' }" custom v-slot="{ navigate }">
             <b-dropdown-item @click="navigate">Profile</b-dropdown-item>
+          </router-link>
+          <router-link :to="{ name: 'profile.changePword' }" custom v-slot="{ navigate }">
+            <b-dropdown-item @click="navigate">Change Password</b-dropdown-item>
           </router-link>
           <router-link :to="{ name: 'logout' }" custom v-slot="{ navigate }">
             <b-dropdown-item @click="navigate">Logout</b-dropdown-item>
