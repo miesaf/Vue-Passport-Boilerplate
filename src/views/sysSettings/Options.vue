@@ -12,7 +12,7 @@
           <b-card>
             <b-card class="mb-4">
               <b-button variant="success" @click="addOption()"><b-icon icon="plus" /> Add Option</b-button>
-              <b-button variant="secondary" class="float-right" @click="getOptionList()"><b-icon icon="arrow-repeat" /></b-button>
+              <b-button variant="secondary" class="float-right" v-b-tooltip.hover title="Refresh list" @click="getOptionList()"><b-icon icon="arrow-repeat" /></b-button>
             </b-card>
 
             <b-table striped hover :items="optMgts" :fields="tableFields" :busy="tableLoading">
@@ -25,9 +25,9 @@
 
               <!-- A virtual composite column -->
               <template #cell(action)="data">
-                <b-button pill variant="info" size="sm" class="mr-1" @click="viewOption(data.item.id)"><b-icon icon="eye" /></b-button>
-                <b-button pill variant="warning" size="sm" class="mr-1" @click="editOption(data.item.id)"><b-icon icon="pencil" /></b-button>
-                <b-button pill variant="danger" size="sm" @click="delOptionConfirmation(data.item)"><b-icon icon="trash" /></b-button>
+                <b-button pill variant="info" size="sm" class="mr-1" v-b-tooltip.hover title="View option" @click="viewOption(data.item.id)"><b-icon icon="eye" /></b-button>
+                <b-button pill variant="warning" size="sm" class="mr-1" v-b-tooltip.hover title="Edit option" @click="editOption(data.item.id)"><b-icon icon="pencil" /></b-button>
+                <b-button pill variant="danger" size="sm" v-b-tooltip.hover title="Delete option" @click="delOptionConfirmation(data.item)"><b-icon icon="trash" /></b-button>
               </template>
             </b-table>
 

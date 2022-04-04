@@ -11,7 +11,7 @@
         <b-overlay :show="loadingIndicator" rounded="sm">
           <b-card>
             <b-card class="mb-4">
-              <b-button variant="secondary" class="float-right ml-2" @click="getAuditLogList()"><b-icon icon="arrow-repeat" /></b-button>
+              <b-button variant="secondary" class="float-right ml-2" v-b-tooltip.hover title="Refresh list" @click="getAuditLogList()"><b-icon icon="arrow-repeat" /></b-button>
               <!-- <b-button variant="primary" class="float-right" @click="toggleSearch()"><b-icon icon="search" /> Search</b-button> -->
             </b-card>
 
@@ -30,7 +30,7 @@
 
               <!-- A virtual composite column -->
               <template #cell(action)="data">
-                <b-button pill variant="info" size="sm" class="mr-1" @click="viewAuditLog(data.item.id)"><b-icon icon="eye" /></b-button>
+                <b-button pill variant="info" size="sm" class="mr-1" v-b-tooltip.hover title="View record" @click="viewAuditLog(data.item.id)"><b-icon icon="eye" /></b-button>
               </template>
             </b-table>
 

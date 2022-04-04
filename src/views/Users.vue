@@ -12,7 +12,7 @@
           <b-card>
             <b-card class="mb-4">
               <b-button variant="success" @click="addUser()"><b-icon icon="plus" /> Add User</b-button>
-              <b-button variant="secondary" class="float-right" @click="getUserList()"><b-icon icon="arrow-repeat" /></b-button>
+              <b-button variant="secondary" class="float-right" v-b-tooltip.hover title="Refresh list" @click="getUserList()"><b-icon icon="arrow-repeat" /></b-button>
             </b-card>
 
             <b-table striped hover :items="users" :fields="tableFields" :busy="tableLoading">
@@ -30,9 +30,9 @@
 
               <!-- A virtual composite column -->
               <template #cell(action)="data">
-                <b-button pill variant="info" size="sm" class="mr-1" @click="viewUser(data.item.id)"><b-icon icon="eye" /></b-button>
-                <b-button pill variant="warning" size="sm" class="mr-1" @click="editUser(data.item.id)"><b-icon icon="pencil" /></b-button>
-                <b-button pill variant="danger" size="sm" @click="delUserConfirmation(data.item)"><b-icon icon="trash" /></b-button>
+                <b-button pill variant="info" size="sm" class="mr-1" v-b-tooltip.hover title="View user" @click="viewUser(data.item.id)"><b-icon icon="eye" /></b-button>
+                <b-button pill variant="warning" size="sm" class="mr-1" v-b-tooltip.hover title="Edit user" @click="editUser(data.item.id)"><b-icon icon="pencil" /></b-button>
+                <b-button pill variant="danger" size="sm" v-b-tooltip.hover title="Delete user" @click="delUserConfirmation(data.item)"><b-icon icon="trash" /></b-button>
               </template>
             </b-table>
 
