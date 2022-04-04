@@ -54,7 +54,6 @@
                 </b-form-group>
 
                 <b-form-group label="Vardata:" label-for="vardata">
-                  <!-- <b-form-input id="vardata" v-model="auditData.vardata" type="text" readonly /> -->
                   <pre class="mt-3 mb-0">{{ auditData.vardata }}</pre>
                 </b-form-group>
               </b-form>

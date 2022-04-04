@@ -72,6 +72,14 @@ const routes = [
         component: () => import('@/views/Users.vue'),
       },
 
+      // System Settings
+      {
+        path: 'system/options',
+        name: 'sysSettings.options',
+        meta: { middleware: [ auth ], permissions: ['options.*', 'options.list', 'options.add', 'options.update'] },
+        component: () => import('@/views/sysSettings/Options.vue'),
+      },
+
       // Audit Log
       {
         path: 'auditLogs',
