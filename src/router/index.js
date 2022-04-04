@@ -79,6 +79,12 @@ const routes = [
         meta: { middleware: [ auth ], permissions: ['options.*', 'options.list', 'options.add', 'options.update'] },
         component: () => import('@/views/sysSettings/Options.vue'),
       },
+      {
+        path: 'system/passwordPolicies',
+        name: 'sysSettings.pwdPolicies',
+        meta: { middleware: [ auth ], permissions: ['pwdPolicies.*', 'pwdPolicies.list', 'pwdPolicies.view', 'pwdPolicies.update', 'pwdPolicies.toggle'] },
+        component: () => import('@/views/sysSettings/PwdPolicy.vue'),
+      },
 
       // Audit Log
       {

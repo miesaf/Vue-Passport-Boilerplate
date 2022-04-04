@@ -28,6 +28,9 @@
           <template #button-content>
             <b-icon icon="gear-wide-connected" /> System Settings
           </template>
+          <router-link :to="{ name: 'sysSettings.pwdPolicies' }" custom v-slot="{ navigate }" v-if="permited(['pwdPolicies.*', 'pwdPolicies.list', 'pwdPolicies.view', 'pwdPolicies.update', 'pwdPolicies.toggle'])">
+            <b-dropdown-item @click="navigate"><b-icon icon="layout-text-sidebar" /> Password Policies</b-dropdown-item>
+          </router-link>
           <router-link :to="{ name: 'sysSettings.options' }" custom v-slot="{ navigate }" v-if="permited(['options.*', 'options.list', 'options.add', 'options.update', 'options.delete'])">
             <b-dropdown-item @click="navigate"><b-icon icon="option" /> Option Management</b-dropdown-item>
           </router-link>
