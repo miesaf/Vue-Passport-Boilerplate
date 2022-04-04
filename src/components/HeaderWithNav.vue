@@ -24,7 +24,7 @@
           </router-link>
         </b-nav-item-dropdown>
 
-        </b-nav-item-dropdown>
+
 
         <b-nav-item-dropdown right>
           <template #button-content>
