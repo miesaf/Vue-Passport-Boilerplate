@@ -11,13 +11,7 @@ const service = axios.create({
     'Accept': 'application/json',
   },
   validateStatus: function (status) {
-    if(status >= 200 && status < 400) { return true }
-    if(status == 401) { return true } // Unauthenticated
-    if(status == 403) { return true } // Insufficient permissions
-    if(status == 422) { return true } // Laravel validation error
-    if(status == 429) { return true } // Laravel throttle error
-    if(status == 500) { return true } // Internal Server Error
-    if(status == 503) { return true } // Service Unavailable
+    return (status >= 200 && status < 400)
   }
 })
 
@@ -53,7 +47,6 @@ service.interceptors.request.use(
               })
               .catch(() => {
                 console.error("Token refresh failed")
-                // return Promise.reject()
                 logoutFlag = true
               })
           } catch (error) {
@@ -76,40 +69,41 @@ service.interceptors.request.use(
     return await config
   },
   error => {
-    // Do something with request error
-    Promise.reject(error)
+    // Do nothing
+    return Promise.reject(error)
   }
 )
 
 // response
 service.interceptors.response.use(async function (response) {
-  switch(response.status) {
-    case 401:
+  // Do nothing
+  return await response
+}, async function (error) {
+  // Unresolved request
+  switch(error.status) {
+    case 401: // Unauthenticated
       await store.dispatch("Logout")
       await store.dispatch("ServiceNotify", { message: "Session expired. Please re-login.", class: "danger" })
       await new Promise(r => setTimeout(r, 2000))
       await window.location.replace(process.env.VUE_APP_URL)
       break
-    case 403:
+    case 403: // Insufficient permissions
       await store.dispatch("ServiceNotify", { message: "Insufficient permission. Request rejected.", class: "danger" })
       break
-    case 429:
-      await store.dispatch("ServiceNotify", { message: response.data.message, class: "danger" })
+    case 429: // Laravel throttle error
+      await store.dispatch("ServiceNotify", { message: error.data.message, class: "danger" })
       break
-    case 500:
+    case 500: // Internal Server Error
       await store.dispatch("ServiceNotify", { message: "Back end service error.", class: "danger" })
       break
-    case 503:
+    case 503: // Service Unavailable
       await store.dispatch("ServiceNotify", { message: "Back end service unavailable. Please try again later. If problem persist report to system administrator.", class: "danger" })
       break
     default:
       // do nothing
   }
 
-  return await response
-}, function (error) {
-  // Unresolved request
-  Promise.reject(error)
+  return Promise.reject(error)
 })
 
 export default service
