@@ -42,7 +42,7 @@
             <b-modal v-model="pwdPolicyDialog" title="Update Password Policy" @hide="clearPwdPolicyData()">
               <b-form :validated="formValidation" novalidate>
                 <b-form-group label="ID:" label-for="id">
-                  <b-form-input id="user_id" v-model="pwdPolicyData.id" type="text" readonly />
+                  <b-form-input id="id" v-model="pwdPolicyData.id" type="text" readonly />
                 </b-form-group>
 
                 <b-form-group label="Name:" label-for="name">
@@ -50,7 +50,7 @@
                 </b-form-group>
 
                 <b-form-group label="Description:" label-for="desc">
-                  <b-form-textarea id="email" v-model="pwdPolicyData.description" rows="3" readonly />
+                  <b-form-textarea id="desc" v-model="pwdPolicyData.desc" rows="3" readonly />
                 </b-form-group>
 
                 <b-form-group label="Value:" label-for="value" v-if="pwdPolicyData.valueFlag">
@@ -132,7 +132,7 @@ export default {
       pwdPolicies: [],
       tableLoading: true,
       filters: {},
-      
+
       pwdPolicyData: {},
       pwdPolicyDialog: false,
       displayConfirmation: false,
@@ -176,6 +176,7 @@ export default {
     editPwdPolicy(pwdPolicy) {
       this.clearPwdPolicyData()
       this.pwdPolicyData = Object.assign({}, pwdPolicy)
+      this.pwdPolicyData.desc = pwdPolicy.desc
       this.input.value.value = pwdPolicy.value
       this.input.status.value = pwdPolicy.status
       this.pwdPolicyData.valueFlag = pwdPolicy.value
