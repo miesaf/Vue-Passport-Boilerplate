@@ -9,6 +9,9 @@ import { getRefreshToken, setRefreshToken, removeRefreshToken } from '@/utilitie
 import { getRefreshExpiresOn, setRefreshExpiresOn, removeRefreshExpiresOn } from '@/utilities/auth'
 import moment from "moment";
 
+const ENV = window.__ENV || {};
+const API_BASE = ENV.VUE_APP_BE || process.env.VUE_APP_BE;
+
 const user = {
   state: {
     authMaxAttempt: getAuthMaxAttempt(),
@@ -47,7 +50,7 @@ const user = {
       const token = usrdet.token
       const data = usrdet.user
       const now = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-      
+
       var ttl = token.expires_in ? token.expires_in : 0
       var token_expire = moment(now).add(ttl, "seconds")
 
@@ -154,7 +157,7 @@ const user = {
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
-          url: process.env.VUE_APP_BE + 'refreshToken',
+          url: API_BASE + 'refreshToken',
           data: {
             refresh_token: getRefreshToken()
           }

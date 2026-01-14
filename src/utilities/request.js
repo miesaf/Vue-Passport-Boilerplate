@@ -3,8 +3,11 @@ import store from '@/store'
 import { getToken } from '@/utilities/auth'
 import moment from 'moment'
 
+const ENV = window.__ENV || {};
+const API_BASE = ENV.VUE_APP_BE || process.env.VUE_APP_BE;
+
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BE,
+  baseURL: API_BASE,
   timeout: 15000,   // miliseconds
   headers: {
     'Content-Type': 'application/json',

@@ -1,9 +1,12 @@
 const { defineConfig } = require('@vue/cli-service')
+const ENV = window.__ENV || {};
+const API_BASE = ENV.VUE_APP_BE || process.env.VUE_APP_BE;
+
 module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: process.env.VUE_APP_PUBLIC,
   devServer: {
-    proxy: process.env.VUE_APP_BE
+    proxy: API_BASE
   },
   pages: {
     index: {
