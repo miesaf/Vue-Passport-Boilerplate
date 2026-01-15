@@ -10,6 +10,11 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+const ENV = window.__ENV || {}
+if (ENV.VUE_APP_NAME) {
+  document.title = ENV.VUE_APP_NAME
+}
+
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
