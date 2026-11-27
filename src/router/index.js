@@ -1,11 +1,8 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import store from '@/store/index'
 import guest from './middleware/guest'
 import auth from './middleware/auth'
 import middlewarePipeline from './middlewarePipeline'
-
-Vue.use(VueRouter)
 
 const routes = [
   {
@@ -109,23 +106,24 @@ const routes = [
   { path: '/500', name: 'error.500', component: () => import('@/components/Err500Page.vue') },
 
   // If route not found (404)
-  { path: '*', component: () => import('@/components/Err404Page.vue') },
+  { path: '/:pathMatch(.*)*', name: 'error.404', component: () => import('@/components/Err404Page.vue') },
 ]
 
-const router = new VueRouter({
-  base: process.env.VUE_APP_BASE_URL,
+// Hash mode, as before (Vue Router 3's default mode ignored `base`)
+const router = createRouter({
+  history: createWebHashHistory(),
   routes,
   scrollBehavior() {
-    return {x: 0, y: 0};
+    return { top: 0, left: 0 };
   }
 })
 
 router.beforeEach(async (to, from, next) => {
   if (!(to.meta.middleware || to.meta.permissions)) {
-    process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] No middleware and permission meta tag defined')
+    import.meta.env.PROD ? null : console.log('[DEBUG] No middleware and permission meta tag defined')
     return await next()
   } else {
-    process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] Middleware or permission meta tag exists')
+    import.meta.env.PROD ? null : console.log('[DEBUG] Middleware or permission meta tag exists')
   }
 
   const middleware = to.meta.middleware

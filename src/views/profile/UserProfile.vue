@@ -5,7 +5,7 @@
         <h3 class="pb-2">User Profile</h3>
         
         <b-alert
-          :show="alert.dismissCountDown"
+          v-model="alert.dismissCountDown"
           dismissible
           fade
           :variant="alert.class"
@@ -21,7 +21,7 @@
                 <label for="user_id">User ID:</label>
               </b-col>
               <b-col sm="9">
-                <b-form-input id="user_id" type="text" :value="this.$store.getters.authUserId" readonly></b-form-input>
+                <b-form-input id="user_id" type="text" :model-value="$store.getters.authUserId" readonly></b-form-input>
               </b-col>
             </b-row>
             
@@ -30,7 +30,7 @@
                 <label for="name">Name:</label>
               </b-col>
               <b-col sm="9">
-                <b-form-input id="name" type="text" :value="this.$store.getters.authName" readonly></b-form-input>
+                <b-form-input id="name" type="text" :model-value="$store.getters.authName" readonly></b-form-input>
               </b-col>
             </b-row>
             
@@ -39,7 +39,7 @@
                 <label for="email">Email:</label>
               </b-col>
               <b-col sm="9">
-                <b-form-input id="email" type="text" :value="this.$store.getters.authEmail" readonly></b-form-input>
+                <b-form-input id="email" type="text" :model-value="$store.getters.authEmail" readonly></b-form-input>
               </b-col>
             </b-row>
             
@@ -49,7 +49,7 @@
               </b-col>
               <b-col sm="9">
                 <p>
-                  <b-badge variant="primary" v-for="role in this.$store.getters.authRoles" :key="role.id" class="mr-2 mb-2">{{ role }}</b-badge>
+                  <b-badge variant="primary" v-for="role in $store.getters.authRoles" :key="role" class="me-2 mb-2">{{ role }}</b-badge>
                 </p>
               </b-col>
             </b-row>
@@ -60,7 +60,7 @@
               </b-col>
               <b-col sm="9">
                 <p>
-                  <b-badge variant="warning" v-for="permission in this.$store.getters.authPermissions" :key="permission.id" class="mr-2 mb-2">{{ permission }}</b-badge>
+                  <b-badge variant="warning" v-for="permission in $store.getters.authPermissions" :key="permission" class="me-2 mb-2">{{ permission }}</b-badge>
                 </p>
               </b-col>
             </b-row>
@@ -70,7 +70,7 @@
                 <label for="last_login">Last Login:</label>
               </b-col>
               <b-col sm="9">
-                <b-form-input id="last_login" type="text" :value="this.$store.getters.authLastLogin" readonly></b-form-input>
+                <b-form-input id="last_login" type="text" :model-value="$store.getters.authLastLogin" readonly></b-form-input>
               </b-col>
             </b-row>
           </b-card-body>

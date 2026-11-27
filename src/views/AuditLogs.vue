@@ -4,15 +4,15 @@
       <b-col cols="10" md="12" class="py-3">
         <h3 class="pb-2">Audit Logs</h3>
 
-        <b-alert :show="alert.dismissCountDown" dismissible fade :variant="alert.class" @dismissed="alert.dismissCountDown=0" >
+        <b-alert v-model="alert.dismissCountDown" dismissible fade :variant="alert.class" @dismissed="alert.dismissCountDown=0" >
           <p>{{ alert.message }}</p>
         </b-alert>
 
         <b-overlay :show="loadingIndicator" rounded="sm">
           <b-card>
             <b-card class="mb-4">
-              <b-button variant="secondary" class="float-right ml-2" v-b-tooltip.hover title="Refresh list" @click="getAuditLogList()"><b-icon icon="arrow-repeat" /></b-button>
-              <!-- <b-button variant="primary" class="float-right" @click="toggleSearch()"><b-icon icon="search" /> Search</b-button> -->
+              <b-button variant="secondary" class="float-end ms-2" v-b-tooltip.hover title="Refresh list" @click="getAuditLogList()"><b-icon icon="arrow-repeat" /></b-button>
+              <!-- <b-button variant="primary" class="float-end" @click="toggleSearch()"><b-icon icon="search" /> Search</b-button> -->
             </b-card>
 
             <b-table striped hover :items="auditLogs" :fields="tableFields" :busy="tableLoading">
@@ -30,12 +30,12 @@
 
               <!-- A virtual composite column -->
               <template #cell(action)="data">
-                <b-button pill variant="info" size="sm" class="mr-1" v-b-tooltip.hover title="View record" @click="viewAuditLog(data.item.id)"><b-icon icon="eye" /></b-button>
+                <b-button pill variant="info" size="sm" class="me-1" v-b-tooltip.hover title="View record" @click="viewAuditLog(data.item.id)"><b-icon icon="eye" /></b-button>
               </template>
             </b-table>
 
             <!-- View modal -->
-            <b-modal v-model="auditDialog" title="Audit Log Details" size="xl" hide-footer>
+            <b-modal v-model="auditDialog" title="Audit Log Details" size="xl" no-footer>
               <b-form>
                 <b-form-group label="ID:" label-for="id">
                   <b-form-input id="id" v-model="auditData.id" type="text" readonly />

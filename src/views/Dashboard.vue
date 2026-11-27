@@ -5,7 +5,7 @@
         <h3 class="pb-2">Dashboard</h3>
         
         <b-alert
-          :show="alert.dismissCountDown"
+          v-model="alert.dismissCountDown"
           dismissible
           fade
           :variant="alert.class"
@@ -41,7 +41,7 @@ export default {
     if(flashMessage) {
       this.alert.message = flashMessage
       this.alert.class = this.$session.flash.get("flash-class")
-      this.alert.dismissCountDown = 10
+      this.alert.dismissCountDown = 10000 // milliseconds
     }
   },
 }

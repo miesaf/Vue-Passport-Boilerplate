@@ -8,7 +8,7 @@
           <b-form>
             <b-form-group label="User ID:">
               <b-form-input v-model="input.user_id.value" placeholder="Enter user ID" required />
-              <b-form-invalid-feedback :state="input.user_id.errMsg">{{ input.user_id.errMsg }}</b-form-invalid-feedback>
+              <b-form-invalid-feedback :state="input.user_id.errMsg ? false : null">{{ input.user_id.errMsg }}</b-form-invalid-feedback>
             </b-form-group>
 
             <b-button variant="primary" align-h="end" @click="onSubmit">Request password reset</b-button><br/>

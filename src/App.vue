@@ -1,19 +1,20 @@
 <template>
-  <div id="app" @mousemove="user_input()" @keydown="user_input()" @click="user_input()">
-    <b-modal id="sito-modal" title="Warning" v-model="sito_disp" hide-header-close no-close-on-backdrop no-close-on-esc>
+  <div @mousemove="user_input()" @keydown="user_input()" @click="user_input()">
+    <b-orchestrator />
+    <b-modal id="sito-modal" title="Warning" v-model="sito_disp" no-header-close no-close-on-backdrop no-close-on-esc>
       <b-row>
         <b-col cols="2">
-          <b-icon icon="exclamation-triangle-fill" variant="warning" class="mr-3" font-scale="3"></b-icon>
+          <b-icon icon="exclamation-triangle-fill" variant="warning" class="me-3" font-scale="3"></b-icon>
         </b-col>
         <b-col cols="10">
           <span>You have been inactive for a moment. Auto logging out in {{ sito_dispSecLeft }} seconds.</span>
         </b-col>
       </b-row>
 
-      <template #modal-footer>
-        <div class="float-right">
+      <template #footer>
+        <div class="float-end">
           <b-button variant="danger" @click="sito_logout_call()" >Logout</b-button>
-          <b-button variant="info" class="ml-2" @click="sito_close_disp()" >Continue Session</b-button>
+          <b-button variant="info" class="ms-2" @click="sito_close_disp()" >Continue Session</b-button>
         </div>
       </template>
     </b-modal>
@@ -66,7 +67,7 @@ export default {
     },
 
     isIdlePipe: function (val) {
-      process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] [SITO] Is idle: ' + val)
+      import.meta.env.PROD ? null : console.log('[DEBUG] [SITO] Is idle: ' + val)
 
       if(!this.sito_disp && val && this.$store.getters.token) {
         this.sito_secLeft = this.sito_defaultSecLeft
@@ -81,13 +82,13 @@ export default {
         if (this.sito_disp) {
           setTimeout(() => {
             this.sito_secLeft--
-            process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] [SITO] Seconds left: ' + this.sito_secLeft)
+            import.meta.env.PROD ? null : console.log('[DEBUG] [SITO] Seconds left: ' + this.sito_secLeft)
 
             if(this.sito_secLeft >= 0) {
               this.sito_dispSecLeft = this.sito_secLeft
-              process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] [SITO] Second left (Display): ' + this.sito_dispSecLeft)
+              import.meta.env.PROD ? null : console.log('[DEBUG] [SITO] Second left (Display): ' + this.sito_dispSecLeft)
             } else {
-              process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] [SITO] Seconds left (Timed out): ' + this.sito_secLeft)
+              import.meta.env.PROD ? null : console.log('[DEBUG] [SITO] Seconds left (Timed out): ' + this.sito_secLeft)
               this.sito_logout = true
             }
           }, 1000)
@@ -137,7 +138,7 @@ export default {
 
     user_input() {
       if((this.sito_secLeft < 0) && this.sito_logout) {
-        process.env.NODE_ENV === 'production' ? null : console.log('[DEBUG] [SITO] Delayed logout executed')
+        import.meta.env.PROD ? null : console.log('[DEBUG] [SITO] Delayed logout executed')
         this.sito_logout_call()
       } else {
         const last_activity = this.sito_last_activity

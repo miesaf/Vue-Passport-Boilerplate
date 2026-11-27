@@ -1,33 +1,47 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
+import {
+  createBootstrap, vBTooltip,
+  BAlert, BBadge, BButton, BCard, BCardBody, BCardText, BCol, BCollapse, BContainer, BDropdownDivider,
+  BDropdownItem, BForm, BFormCheckbox, BFormGroup, BFormInput, BFormInvalidFeedback, BFormSelect, BFormTextarea,
+  BImg, BModal, BNavItemDropdown, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, BOffcanvas, BOrchestrator,
+  BOverlay, BRow, BSpinner, BTable
+} from 'bootstrap-vue-next'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import IdleVue from 'idle-vue'
-import VueSession from 'vue-session'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import IdlePlugin from './plugins/idle'
+import SessionPlugin from './plugins/session'
+import ToastPlugin from './plugins/toast'
+import BIcon from './components/BIcon.vue'
 
-// Import Bootstrap an BootstrapVue CSS files (order is important)
+// Bootstrap 5, BootstrapVueNext and Bootstrap Icons CSS (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
-// Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
+const app = createApp(App)
 
-const SITOoptions = {
+// Make BootstrapVueNext available throughout the project
+app.use(createBootstrap())
+Object.entries({
+  BAlert, BBadge, BButton, BCard, BCardBody, BCardText, BCol, BCollapse, BContainer, BDropdownDivider,
+  BDropdownItem, BForm, BFormCheckbox, BFormGroup, BFormInput, BFormInvalidFeedback, BFormSelect, BFormTextarea,
+  BImg, BModal, BNavItemDropdown, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, BOffcanvas, BOrchestrator,
+  BOverlay, BRow, BSpinner, BTable
+}).forEach(([name, component]) => app.component(name, component))
+app.component('BIcon', BIcon)
+app.directive('b-tooltip', vBTooltip)
+
+// Session idle time out (SITO)
+app.use(IdlePlugin, {
   store,
-  idleTime: process.env.VUE_APP_SITO * 1000,  // convert seconds to miliseconds
+  idleTime: (Number(import.meta.env.VUE_APP_SITO) || 900) * 1000,  // convert seconds to miliseconds
   startAtIdle: false
-}
+})
+app.use(SessionPlugin)
+app.use(ToastPlugin)
 
-Vue.use(IdleVue, SITOoptions)
-Vue.use(VueSession)
+app.use(store)
+app.use(router)
 
-Vue.config.productionTip = false
-
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+app.mount('#app')
