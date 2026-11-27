@@ -5,7 +5,7 @@
         <h3 class="pb-2">Change Password</h3>
         
         <b-alert
-          :show="alert.dismissCountDown"
+          v-model="alert.dismissCountDown"
           dismissible
           fade
           :variant="alert.class"
@@ -19,17 +19,17 @@
             <b-form>
               <b-form-group label="Current Password:">
                 <b-form-input type="password" v-model="input.oldPassword.value" placeholder="Enter current password" required />
-                <b-form-invalid-feedback :state="input.oldPassword.errMsg">{{ input.oldPassword.errMsg }}</b-form-invalid-feedback>
+                <b-form-invalid-feedback :state="input.oldPassword.errMsg ? false : null">{{ input.oldPassword.errMsg }}</b-form-invalid-feedback>
               </b-form-group>
 
               <b-form-group label="New Password:">
                 <b-form-input type="password" v-model="input.newPassword.value" placeholder="Enter new password" required />
-                <b-form-invalid-feedback :state="input.newPassword.errMsg">{{ input.newPassword.errMsg }}</b-form-invalid-feedback>
+                <b-form-invalid-feedback :state="input.newPassword.errMsg ? false : null">{{ input.newPassword.errMsg }}</b-form-invalid-feedback>
               </b-form-group>
 
               <b-form-group label="Confirm New Password:">
                 <b-form-input type="password" v-model="input.confirmNewPassword.value" placeholder="Enter new password again" required />
-                <b-form-invalid-feedback :state="input.confirmNewPassword.errMsg">{{ input.confirmNewPassword.errMsg }}</b-form-invalid-feedback>
+                <b-form-invalid-feedback :state="input.confirmNewPassword.errMsg ? false : null">{{ input.confirmNewPassword.errMsg }}</b-form-invalid-feedback>
               </b-form-group>
 
               <b-button variant="primary" align-h="end" @click="onSubmit">Submit</b-button><br/>

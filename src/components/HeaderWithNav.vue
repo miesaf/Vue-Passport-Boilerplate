@@ -1,15 +1,15 @@
 <template>
-  <b-navbar toggleable="md" type="dark" variant="success">
+  <b-navbar toggleable="md" variant="success" class="navbar-dark">
     <router-link :to="{ name: 'dashboard' }" custom v-slot="{ navigate }">
-      <b-navbar-brand @click="navigate">{{ appName }}</b-navbar-brand>
+      <b-navbar-brand href="#" @click.prevent="navigate">{{ appName }}</b-navbar-brand>
     </router-link>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown right v-if="permited(['users.*', 'users.list', 'users.add', 'users.view', 'users.update', 'users.delete', 'auditLogs.*', 'auditLogs.list', 'auditLogs.view'])">
+      <b-navbar-nav class="ms-auto">
+        <b-nav-item-dropdown placement="bottom-end" v-if="permited(['users.*', 'users.list', 'users.add', 'users.view', 'users.update', 'users.delete', 'auditLogs.*', 'auditLogs.list', 'auditLogs.view'])">
           <template #button-content>
             <b-icon icon="grid" /> Menu
           </template>
@@ -24,7 +24,7 @@
           </router-link>
         </b-nav-item-dropdown>
 
-        <b-nav-item-dropdown right v-if="permited(['pwdPolicies.*', 'pwdPolicies.list', 'pwdPolicies.view', 'pwdPolicies.update', 'pwdPolicies.toggle', 'options.*', 'options.list', 'options.add', 'options.update', 'options.delete'])">
+        <b-nav-item-dropdown placement="bottom-end" v-if="permited(['pwdPolicies.*', 'pwdPolicies.list', 'pwdPolicies.view', 'pwdPolicies.update', 'pwdPolicies.toggle', 'options.*', 'options.list', 'options.add', 'options.update', 'options.delete'])">
           <template #button-content>
             <b-icon icon="gear-wide-connected" /> System Settings
           </template>
@@ -36,7 +36,7 @@
           </router-link>
         </b-nav-item-dropdown>
 
-        <b-nav-item-dropdown right>
+        <b-nav-item-dropdown placement="bottom-end">
           <template #button-content>
             <b-icon icon="person-circle" /> {{ user_id }}
           </template>
@@ -65,7 +65,7 @@ export default {
 
   data() {
     return {
-      appName: process.env.VUE_APP_NAME,
+      appName: import.meta.env.VUE_APP_NAME,
       user_id: this.$store.state.user.authUserId,
       userName: this.$store.state.user.authName
     }

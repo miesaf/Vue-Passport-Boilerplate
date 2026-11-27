@@ -4,7 +4,7 @@
       <b-col cols="10" md="12" class="py-3">
         <h3 class="pb-2">Option Management</h3>
 
-        <b-alert :show="alert.dismissCountDown" dismissible fade :variant="alert.class" @dismissed="alert.dismissCountDown=0" >
+        <b-alert v-model="alert.dismissCountDown" dismissible fade :variant="alert.class" @dismissed="alert.dismissCountDown=0" >
           <p>{{ alert.message }}</p>
         </b-alert>
 
@@ -12,7 +12,7 @@
           <b-card>
             <b-card class="mb-4">
               <b-button variant="success" @click="addOption()"><b-icon icon="plus" /> Add Option</b-button>
-              <b-button variant="secondary" class="float-right" v-b-tooltip.hover title="Refresh list" @click="getOptionList()"><b-icon icon="arrow-repeat" /></b-button>
+              <b-button variant="secondary" class="float-end" v-b-tooltip.hover title="Refresh list" @click="getOptionList()"><b-icon icon="arrow-repeat" /></b-button>
             </b-card>
 
             <b-table striped hover :items="optMgts" :fields="tableFields" :busy="tableLoading">
@@ -25,8 +25,8 @@
 
               <!-- A virtual composite column -->
               <template #cell(action)="data">
-                <b-button pill variant="info" size="sm" class="mr-1" v-b-tooltip.hover title="View option" @click="viewOption(data.item.id)"><b-icon icon="eye" /></b-button>
-                <b-button pill variant="warning" size="sm" class="mr-1" v-b-tooltip.hover title="Edit option" @click="editOption(data.item.id)"><b-icon icon="pencil" /></b-button>
+                <b-button pill variant="info" size="sm" class="me-1" v-b-tooltip.hover title="View option" @click="viewOption(data.item.id)"><b-icon icon="eye" /></b-button>
+                <b-button pill variant="warning" size="sm" class="me-1" v-b-tooltip.hover title="Edit option" @click="editOption(data.item.id)"><b-icon icon="pencil" /></b-button>
                 <b-button pill variant="danger" size="sm" v-b-tooltip.hover title="Delete option" @click="delOptionConfirmation(data.item)"><b-icon icon="trash" /></b-button>
               </template>
             </b-table>
@@ -59,10 +59,10 @@
                 </b-form-group>
               </b-form>
 
-              <template #modal-footer>
-                <div class="float-right">
+              <template #footer>
+                <div class="float-end">
                   <b-button variant="warning" @click="editOption(optionData.id)"><b-icon icon="pencil" /> Edit</b-button>
-                  <b-button variant="danger" class="ml-2" @click="delOptionConfirmation(optionData)"><b-icon icon="trash" /> Delete</b-button>
+                  <b-button variant="danger" class="ms-2" @click="delOptionConfirmation(optionData)"><b-icon icon="trash" /> Delete</b-button>
                 </div>
               </template>
             </b-modal>
@@ -113,10 +113,10 @@
                 </b-form-group>
               </b-form>
 
-              <template #modal-footer>
-                <div class="float-right">
+              <template #footer>
+                <div class="float-end">
                   <b-button variant="primary" v-if="!editOptionDialog" @click="submitNewOption()">Submit</b-button>
-                  <b-button variant="primary" v-if="editOptionDialog" class="ml-2" @click="submitOptionUpdate()">Update</b-button>
+                  <b-button variant="primary" v-if="editOptionDialog" class="ms-2" @click="submitOptionUpdate()">Update</b-button>
                 </div>
               </template>
             </b-modal>
@@ -125,7 +125,7 @@
             <b-modal v-model="deleteOptionDialog" title="Delete Option" @hide="clearOptionData()">
               <b-row>
                 <b-col cols="2">
-                  <b-icon icon="exclamation-triangle-fill" variant="warning" class="mr-3" font-scale="3"></b-icon>
+                  <b-icon icon="exclamation-triangle-fill" variant="warning" class="me-3" font-scale="3"></b-icon>
                 </b-col>
                 <b-col cols="10">
                   <span>Are you sure you want to delete this option?<br/><br/>
@@ -136,10 +136,10 @@
                 </b-col>
               </b-row>
 
-              <template #modal-footer>
-                <div class="float-right">
+              <template #footer>
+                <div class="float-end">
                   <b-button variant="secondary" @click="cancelDelOption()">Cancel</b-button>
-                  <b-button variant="danger" class="ml-2" @click="delOption(optionData.id)">Delete</b-button>
+                  <b-button variant="danger" class="ms-2" @click="delOption(optionData.id)">Delete</b-button>
                 </div>
               </template>
             </b-modal>

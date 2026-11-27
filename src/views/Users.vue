@@ -4,7 +4,7 @@
       <b-col cols="10" md="12" class="py-3">
         <h3 class="pb-2">User Management</h3>
 
-        <b-alert :show="alert.dismissCountDown" dismissible fade :variant="alert.class" @dismissed="alert.dismissCountDown=0" >
+        <b-alert v-model="alert.dismissCountDown" dismissible fade :variant="alert.class" @dismissed="alert.dismissCountDown=0" >
           <p>{{ alert.message }}</p>
         </b-alert>
 
@@ -12,7 +12,7 @@
           <b-card>
             <b-card class="mb-4">
               <b-button variant="success" @click="addUser()"><b-icon icon="plus" /> Add User</b-button>
-              <b-button variant="secondary" class="float-right" v-b-tooltip.hover title="Refresh list" @click="getUserList()"><b-icon icon="arrow-repeat" /></b-button>
+              <b-button variant="secondary" class="float-end" v-b-tooltip.hover title="Refresh list" @click="getUserList()"><b-icon icon="arrow-repeat" /></b-button>
             </b-card>
 
             <b-table striped hover :items="users" :fields="tableFields" :busy="tableLoading">
@@ -30,8 +30,8 @@
 
               <!-- A virtual composite column -->
               <template #cell(action)="data">
-                <b-button pill variant="info" size="sm" class="mr-1" v-b-tooltip.hover title="View user" @click="viewUser(data.item.id)"><b-icon icon="eye" /></b-button>
-                <b-button pill variant="warning" size="sm" class="mr-1" v-b-tooltip.hover title="Edit user" @click="editUser(data.item.id)"><b-icon icon="pencil" /></b-button>
+                <b-button pill variant="info" size="sm" class="me-1" v-b-tooltip.hover title="View user" @click="viewUser(data.item.id)"><b-icon icon="eye" /></b-button>
+                <b-button pill variant="warning" size="sm" class="me-1" v-b-tooltip.hover title="Edit user" @click="editUser(data.item.id)"><b-icon icon="pencil" /></b-button>
                 <b-button pill variant="danger" size="sm" v-b-tooltip.hover title="Delete user" @click="delUserConfirmation(data.item)"><b-icon icon="trash" /></b-button>
               </template>
             </b-table>
@@ -52,34 +52,34 @@
                 </b-form-group>
 
                 <b-form-group label="Roles:" label-for="roles">
-                  <p><b-badge variant="primary" v-for="role in userData.roles" :key="role.id" class="mr-2 mb-2">{{ role.name }}</b-badge></p>
+                  <p><b-badge variant="primary" v-for="role in userData.roles" :key="role.id" class="me-2 mb-2">{{ role.name }}</b-badge></p>
                 </b-form-group>
 
                 <b-form-group label="Role Permissions:" label-for="permissions">
-                  <p><b-badge variant="warning" v-for="permission in userData.rolePermissions" :key="permission.id" class="mr-2 mb-2">{{ permission }}</b-badge></p>
+                  <p><b-badge variant="warning" v-for="permission in userData.rolePermissions" :key="permission" class="me-2 mb-2">{{ permission }}</b-badge></p>
                 </b-form-group>
 
                 <b-form-group label="Extra Permissions:" label-for="extra_permissions">
-                  <p v-if="userData.extraPermissions.length"><b-badge variant="warning" v-for="permission in userData.extraPermissions" :key="permission.id" class="mr-2 mb-2">{{ permission }}</b-badge></p>
-                  <b-form-input id="last_login" v-else value="No extra permission assigned" type="text" readonly />
+                  <p v-if="userData.extraPermissions.length"><b-badge variant="warning" v-for="permission in userData.extraPermissions" :key="permission" class="me-2 mb-2">{{ permission }}</b-badge></p>
+                  <b-form-input id="last_login" v-else model-value="No extra permission assigned" type="text" readonly />
                 </b-form-group>
 
                 <b-form-group label="Last Login:" label-for="last_login">
                   <b-form-input id="last_login" v-if="userData.current_signin" v-model="userData.current_signin" type="text" readonly />
-                  <b-form-input id="last_login" v-else value="This user had never logged in" type="text" readonly />
+                  <b-form-input id="last_login" v-else model-value="This user had never logged in" type="text" readonly />
                 </b-form-group>
 
                 <b-form-group label="Account Status:" label-for="status">
-                  <p><b-badge variant="success" v-if="userData.is_active" class="mr-2 mb-2"><b-icon icon="check-circle" /> Active</b-badge></p>
-                  <p><b-badge variant="warning" v-if="!userData.is_active" class="mr-2 mb-2"><b-icon icon="dash-circle" /> Disabled</b-badge></p>
-                  <p><b-badge variant="danger" v-if="userData.is_locked" class="mr-2 mb-2"><b-icon icon="lock" /> Locked</b-badge></p>
+                  <p><b-badge variant="success" v-if="userData.is_active" class="me-2 mb-2"><b-icon icon="check-circle" /> Active</b-badge></p>
+                  <p><b-badge variant="warning" v-if="!userData.is_active" class="me-2 mb-2"><b-icon icon="dash-circle" /> Disabled</b-badge></p>
+                  <p><b-badge variant="danger" v-if="userData.is_locked" class="me-2 mb-2"><b-icon icon="lock" /> Locked</b-badge></p>
                 </b-form-group>
               </b-form>
 
-              <template #modal-footer>
-                <div class="float-right">
+              <template #footer>
+                <div class="float-end">
                   <b-button variant="warning" @click="editUser(userData.id)"><b-icon icon="pencil" /> Edit</b-button>
-                  <b-button variant="danger" class="ml-2" @click="delUserConfirmation(userData)"><b-icon icon="trash" /> Delete</b-button>
+                  <b-button variant="danger" class="ms-2" @click="delUserConfirmation(userData)"><b-icon icon="trash" /> Delete</b-button>
                 </div>
               </template>
             </b-modal>
@@ -130,10 +130,10 @@
                 </b-form-group>
               </b-form>
 
-              <template #modal-footer>
-                <div class="float-right">
+              <template #footer>
+                <div class="float-end">
                   <b-button variant="primary" v-if="!editUserDialog" @click="submitNewUser()">Submit</b-button>
-                  <b-button variant="primary" v-if="editUserDialog" class="ml-2" @click="submitUserUpdate()">Update</b-button>
+                  <b-button variant="primary" v-if="editUserDialog" class="ms-2" @click="submitUserUpdate()">Update</b-button>
                 </div>
               </template>
             </b-modal>
@@ -142,17 +142,17 @@
             <b-modal v-model="deleteUserDialog" title="Delete User" @hide="clearUserData()">
               <b-row>
                 <b-col cols="2">
-                  <b-icon icon="exclamation-triangle-fill" variant="warning" class="mr-3" font-scale="3"></b-icon>
+                  <b-icon icon="exclamation-triangle-fill" variant="warning" class="me-3" font-scale="3"></b-icon>
                 </b-col>
                 <b-col cols="10">
                   <span>Are you sure you want to delete <b>{{ userData.name }}</b>?</span>
                 </b-col>
               </b-row>
 
-              <template #modal-footer>
-                <div class="float-right">
+              <template #footer>
+                <div class="float-end">
                   <b-button variant="secondary" @click="cancelDelUser()">Cancel</b-button>
-                  <b-button variant="danger" class="ml-2" @click="delUser(userData)">Delete</b-button>
+                  <b-button variant="danger" class="ms-2" @click="delUser(userData)">Delete</b-button>
                 </div>
               </template>
             </b-modal>
@@ -333,7 +333,7 @@ export default {
 
                 if(e.response.data.errors) {
                   var errObj = e.response.data.errors
-                  this.input.user_id.errMsg = errObj.user_id ? errObj.user_id[0] : null
+                  this.input.userId.errMsg = errObj.user_id ? errObj.user_id[0] : null
                   this.input.name.errMsg = errObj.name ? errObj.name[0] : null
                   this.input.email.errMsg = errObj.email ? errObj.email[0] : null
                   this.input.roles.errMsg = errObj.roles ? errObj.roles[0] : null
@@ -435,7 +435,7 @@ export default {
 
                 if(e.response.data.errors) {
                   var errObj = e.response.data.errors
-                  this.input.user_id.errMsg = errObj.user_id ? errObj.user_id[0] : null
+                  this.input.userId.errMsg = errObj.user_id ? errObj.user_id[0] : null
                   this.input.name.errMsg = errObj.name ? errObj.name[0] : null
                   this.input.email.errMsg = errObj.email ? errObj.email[0] : null
                   this.input.roles.errMsg = errObj.roles ? errObj.roles[0] : null

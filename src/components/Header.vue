@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="md" type="dark" variant="primary">
+  <b-navbar toggleable="md" variant="primary" class="navbar-dark">
     <b-navbar-brand href="#">{{ appName }}</b-navbar-brand>
   </b-navbar>
 </template>
@@ -10,7 +10,7 @@ export default {
 
   data() {
     return {
-      appName: process.env.VUE_APP_NAME
+      appName: import.meta.env.VUE_APP_NAME
     }
   }
 }

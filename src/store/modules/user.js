@@ -154,7 +154,7 @@ const user = {
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
-          url: process.env.VUE_APP_BE + 'refreshToken',
+          url: import.meta.env.VUE_APP_BE + 'refreshToken',
           data: {
             refresh_token: getRefreshToken()
           }
@@ -171,7 +171,7 @@ const user = {
             var refreshTtl = data.token.refresh_expires_in ? data.token.refresh_expires_in : 0;
             var refresh_expire = moment(now).add(refreshTtl, "seconds")
 
-            process.env.NODE_ENV === 'production' ? null : console.log("[DEBUG] New token: " + data.token.access_token)
+            import.meta.env.PROD ? null : console.log("[DEBUG] New token: " + data.token.access_token)
 
             setToken(data.token.access_token)
             commit('SET_TOKEN', data.token.access_token)

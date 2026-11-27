@@ -7,12 +7,12 @@
         <b-form>
           <b-form-group label="New Password:">
             <b-form-input v-model="input.password.value" type="password" placeholder="Enter new password" required />
-            <b-form-invalid-feedback :state="input.password.errMsg">{{ input.password.errMsg }}</b-form-invalid-feedback>
+            <b-form-invalid-feedback :state="input.password.errMsg ? false : null">{{ input.password.errMsg }}</b-form-invalid-feedback>
           </b-form-group>
 
           <b-form-group label="Confirm New Password:">
             <b-form-input v-model="input.confirm_password.value" type="password" placeholder="Enter new password again" required />
-            <b-form-invalid-feedback :state="input.confirm_password.errMsg">{{ input.confirm_password.errMsg }}</b-form-invalid-feedback>
+            <b-form-invalid-feedback :state="input.confirm_password.errMsg ? false : null">{{ input.confirm_password.errMsg }}</b-form-invalid-feedback>
           </b-form-group>
 
           <b-button variant="primary" align-h="end" @click="onSubmit">Submit</b-button><br/>

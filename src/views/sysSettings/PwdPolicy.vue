@@ -4,14 +4,14 @@
       <b-col cols="10" md="12" class="py-3">
         <h3 class="pb-2">Password Policies</h3>
 
-        <b-alert :show="alert.dismissCountDown" dismissible fade :variant="alert.class" @dismissed="alert.dismissCountDown=0" >
+        <b-alert v-model="alert.dismissCountDown" dismissible fade :variant="alert.class" @dismissed="alert.dismissCountDown=0" >
           <p>{{ alert.message }}</p>
         </b-alert>
 
         <b-overlay :show="loadingIndicator" rounded="sm">
           <b-card>
             <b-card class="mb-4">
-              <b-button variant="secondary" class="float-right" v-b-tooltip.hover title="Refresh list" @click="getPwdPolicyList()"><b-icon icon="arrow-repeat" /></b-button>
+              <b-button variant="secondary" class="float-end" v-b-tooltip.hover title="Refresh list" @click="getPwdPolicyList()"><b-icon icon="arrow-repeat" /></b-button>
             </b-card>
 
             <b-table striped hover :items="pwdPolicies" :fields="tableFields" :busy="tableLoading">
@@ -28,8 +28,8 @@
               </template>
 
               <template #cell(status)="data">
-                <b-badge variant="success" v-if="data.item.status" class="mr-2 mb-2">Enabled</b-badge>
-                <b-badge variant="danger" v-else class="mr-2 mb-2">Disabled</b-badge>
+                <b-badge variant="success" v-if="data.item.status" class="me-2 mb-2">Enabled</b-badge>
+                <b-badge variant="danger" v-else class="me-2 mb-2">Disabled</b-badge>
               </template>
 
               <!-- A virtual composite column -->
@@ -68,9 +68,9 @@
                 </b-form-group>
               </b-form>
 
-              <template #modal-footer>
-                <div class="float-right">
-                  <b-button variant="primary" class="ml-2" @click="updatePwdPolicy(pwdPolicyData)">Update</b-button>
+              <template #footer>
+                <div class="float-end">
+                  <b-button variant="primary" class="ms-2" @click="updatePwdPolicy(pwdPolicyData)">Update</b-button>
                 </div>
               </template>
             </b-modal>

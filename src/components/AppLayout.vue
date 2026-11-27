@@ -1,21 +1,21 @@
 <template>
   <main>
-    <Header />
-    <Nav />
+    <TopHeader />
+    <NavigationPanel />
     <router-view />
   </main>
 </template>
 
 <script>
-import Nav from '@/components/Nav'
-import Header from '@/components/HeaderWithNav'
+import NavigationPanel from '@/components/Nav.vue'
+import TopHeader from '@/components/HeaderWithNav.vue'
 
 export default {
   name: "AppLayout",
 
   components: {
-    Nav,
-    Header
+    NavigationPanel,
+    TopHeader
   }
 }
 </script>
